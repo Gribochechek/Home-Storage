@@ -41,6 +41,7 @@ public class ListenerForRadioButton implements ActionListener {
 		if (Main.mainWindow.rdbtnAllParts.isSelected()) {
 			Main.mainWindow.automotivePartsTable.setModel(Main.mainWindow.automotivePartsTableModel);
 			Main.mainWindow.itemsTable.updateUI();
+			
 		}
 
 	
