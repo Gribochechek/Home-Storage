@@ -55,8 +55,8 @@ public class MainWindow extends JFrame {
 	public JTable automotivePartsTable;
 
 	private JTabbedPane allItems = new JTabbedPane();
-	private JPanel pFirstTab = new JPanel();
-	private JPanel pSecondTab = new JPanel();
+	public JPanel pFirstTab = new JPanel();
+	public JPanel pSecondTab = new JPanel();
 	private JPanel pFirstTabButtonPanel;
 	private JPanel title_panel;
 	private JLabel title;
@@ -89,7 +89,7 @@ public class MainWindow extends JFrame {
 	private JPanel panel_buttonPanel_spareParts;
 
 	private JScrollPane jsp_automotivePartsTable;
-	public JButton btnSearch_1;
+	public JButton btnSearch_PArts;
 	public JButton btnAddMake;
 	public JButton btnEditMake;
 	public JButton btnDeleteMake;
@@ -165,7 +165,7 @@ public class MainWindow extends JFrame {
 		jsp_itemTable = new JScrollPane(itemsTable);
 		pFirstTab.add(jsp_itemTable, BorderLayout.CENTER);
 
-		allItems.add("Instrumets", pFirstTab);
+		allItems.addTab("Instrumets", pFirstTab);
 		allItems.setEnabledAt(0, true);
 
 		pFirstTabButtonPanel = new JPanel();
@@ -212,14 +212,15 @@ public class MainWindow extends JFrame {
 		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
 		flowLayout.setAlignment(FlowLayout.LEFT);
 
-		ButtonGroup bg1 = new ButtonGroup();
-		String[] string = getGroupsNames();
+		
+		
 
 		rdbtnShowAllItems = new JRadioButton("show all items");
 		rdbtnShowAllItems.setHorizontalAlignment(SwingConstants.LEFT);
 		rdbtnShowAllItems.addActionListener(rdbt_listener);
 		panel.add(rdbtnShowAllItems);
 
+		ButtonGroup bg1 = new ButtonGroup();
 		rdbtnShowItemsFromGroup = new JRadioButton("show items from group");
 		rdbtnShowItemsFromGroup.addActionListener(rdbt_listener);
 		panel.add(rdbtnShowItemsFromGroup);
@@ -231,6 +232,7 @@ public class MainWindow extends JFrame {
 		panel.add(lblGroup);
 
 		cb_Group_name = new JComboBox();
+		String[] string = getGroupsNames();
 		cb_Group_name.setModel(new DefaultComboBoxModel(string));
 		cb_Group_name.addActionListener(rdbt_listener);
 		panel.add(cb_Group_name);
@@ -263,41 +265,29 @@ public class MainWindow extends JFrame {
 		sl_pSecondTab.putConstraint(SpringLayout.EAST, panel_rdbtn_spareParts, 0, SpringLayout.EAST, pSecondTab);
 		pSecondTab.add(panel_rdbtn_spareParts);
 
+		
+		
 		rdbtnAllParts = new JRadioButton("All parts");
 		rdbtnAllParts.setHorizontalAlignment(SwingConstants.LEFT);
 		panel_rdbtn_spareParts.add(rdbtnAllParts);
+		rdbtnAllParts.addActionListener(rdbt_listener);
 
 		rdbtnPartsForMake = new JRadioButton("parts for make");
 		panel_rdbtn_spareParts.add(rdbtnPartsForMake);
+		rdbtnPartsForMake.addActionListener(rdbt_listener);
 
+		
+			
 		comboBox_makeNames = new JComboBox();
 		comboBox_makeNames.setMaximumRowCount(20);
 		comboBox_makeNames.setModel(new DefaultComboBoxModel<>(getMakeNames()));
 		panel_rdbtn_spareParts.add(comboBox_makeNames);
-		comboBox_makeNames.addActionListener(new ActionListener() {// listener which fills combobox with model names of chosen make
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ArrayList<String> modelsList = new ArrayList<>();
-				int tempMakeID = Main.mainWindow.makesList.get(comboBox_makeNames.getSelectedIndex()).getMakeID();
-
-				for (int i = 0; i < Main.mainWindow.modelList.size(); i++) {
-					AutomotiveParts_Model model = Main.mainWindow.modelList.get(i);
-					if (model.getMakeID() == tempMakeID) {
-						modelsList.add(model.getModelName());
-					}
-				}
-				String[] string_models = new String[modelsList.size()];
-				for (int i = 0; i < modelsList.size(); i++) {
-					string_models[i] = modelsList.get(i);
-				}
-				comboBox_model_names.setModel(new DefaultComboBoxModel<>(string_models));
-			}
-		});
+		comboBox_makeNames.addActionListener(rdbt_listener);
 
 		rdbtnPartsForModel = new JRadioButton("parts for model");
 		panel_rdbtn_spareParts.add(rdbtnPartsForModel);
-		
+		rdbtnPartsForModel.addActionListener(rdbt_listener);
+				
 		ButtonGroup autmotiveParts_bg = new ButtonGroup();
 		autmotiveParts_bg.add(rdbtnAllParts);
 		autmotiveParts_bg.add(rdbtnPartsForMake);
@@ -306,11 +296,13 @@ public class MainWindow extends JFrame {
 		comboBox_model_names = new JComboBox();
 		comboBox_model_names.setMaximumRowCount(20);
 		comboBox_model_names.setModel(new DefaultComboBoxModel<>(getModelNames()));
+		comboBox_model_names.addActionListener(rdbt_listener);
 		panel_rdbtn_spareParts.add(comboBox_model_names);
 
-		btnSearch_1 = new JButton("Search");
-		btnSearch_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		panel_rdbtn_spareParts.add(btnSearch_1);
+		btnSearch_PArts = new JButton("Search");
+		btnSearch_PArts.setHorizontalAlignment(SwingConstants.RIGHT);
+		btnSearch_PArts.addActionListener(aListener);
+		panel_rdbtn_spareParts.add(btnSearch_PArts);
 
 		panel_buttonPanel_spareParts = new JPanel();
 		sl_pSecondTab.putConstraint(SpringLayout.SOUTH, jsp_automotivePartsTable, 0, SpringLayout.NORTH,

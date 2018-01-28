@@ -12,8 +12,8 @@ import mainWindows.MainWindow;
 
 public class Main {
 
-	public static WorkingFolders_RW wfr = new WorkingFolders_RW();
-	public static SetFoldersWindow setFoldfWin;
+	
+	
 	public static File groupstxt = new File("data/groupList.txt");
 	public static File groupListdat = new File("data/groupList.dat");
 	public static File instrumentsdat = new File("data/instruments.dat");

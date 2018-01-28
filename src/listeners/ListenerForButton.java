@@ -84,10 +84,17 @@ public class ListenerForButton implements ActionListener {
 
 		}
 		if (e.getSource() == Main.mainWindow.btnSearch) {
-			SearchForm dialog = new SearchForm(Main.mainWindow);
+			SearchForm dialog = new SearchForm(Main.mainWindow, 1);
 			dialog.setVisible(true);
 			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		}
+		if(e.getSource()==Main.mainWindow.btnSearch_PArts) {
+			SearchForm dialog = new SearchForm(Main.mainWindow, 2);
+			dialog.setVisible(true);
+			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			
+		}
+		
 
 		if (e.getSource() == Main.mainWindow.btnAddMake) {
 			MakeAddWindow dialog = new MakeAddWindow();

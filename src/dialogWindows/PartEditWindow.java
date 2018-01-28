@@ -52,7 +52,7 @@ public class PartEditWindow extends JDialog {
 	File partImageSaving;
 	File noImage = new File(Main.imageSaveFolder + "/NoImageAvailable.jpg");
 
-	eHandler available_handler;
+	eHandler available_handler = new eHandler();
 
 	public PartEditWindow(int id) {
 
@@ -341,16 +341,16 @@ public class PartEditWindow extends JDialog {
 		}
 
 		private void setResult() {
-			String temp_str = textField_partName.getText().trim();
+			/*String temp_str = textField_partName.getText().trim();
 			for (int i = 0; i < Main.mainWindow.partList.size(); i++) {
 				AutomotiveParts_Part part = Main.mainWindow.partList.get(i);
 				String str2 = part.getPartName();
-				if (temp_str.toLowerCase().equals(str2.toLowerCase())) {
+				if (temp_str.toLowerCase().equals(str2.toLowerCase().trim())) {
 					JOptionPane.showMessageDialog(null, "Such entry already exists!");
 					Main.mainWindow.itemsTable.setRowSelectionInterval(i, i); // highlight the row with the same name
 					return;
 				}
-			}
+			}*/
 
 			int idOfNewProduct = 0;
 			if (Main.mainWindow.partList.size() == 0)
@@ -397,7 +397,7 @@ public class PartEditWindow extends JDialog {
 			ListWriter lw = new ListWriter();
 			lw.saveListInFile(Main.mainWindow.items, Main.partListdat);
 
-			Main.mainWindow.sql.addPart(editingPart);
+			Main.mainWindow.sql.updatePart(editingPart);
 
 		}
 

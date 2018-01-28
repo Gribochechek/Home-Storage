@@ -26,7 +26,7 @@ import java.awt.FlowLayout;
 public class SearchForm extends JDialog {
 	private JTextField tf_Search;
 
-	public SearchForm(Frame parent) {
+	public SearchForm(Frame parent, int id) {
 		super(parent, true);
 		setTitle("Search");
 		setLocation(Main.mainWindow.windowWidth - this.getWidth() / 2,
@@ -73,8 +73,18 @@ public class SearchForm extends JDialog {
 
 						dispose();
 						searchWord = searchWord.toLowerCase();
-						SearchResult sr = new SearchResult(Main.mainWindow, searchWord);
-						sr.setVisible(true);
+						if(id==1) {
+							SearchResult sr = new SearchResult(Main.mainWindow, searchWord,id);
+							sr.setVisible(true);
+							
+						}
+						if(id==2) {
+							System.out.println("correct");
+							SearchResult sr = new SearchResult(Main.mainWindow, searchWord, id);
+							sr.setVisible(true);
+						}
+						
+						
 
 					}
 				}

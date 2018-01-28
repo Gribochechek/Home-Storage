@@ -18,7 +18,9 @@ import javax.swing.SpringLayout;
 import javax.swing.table.AbstractTableModel;
 
 import main.Main;
+import objects_For_Items.AutomotiveParts_Part;
 import objects_For_Items.Instrument;
+import tableModels.TableModelAutomotiveParts;
 import tableModels.TableModelInstruments;
 
 public class SearchResult extends JDialog {
@@ -28,14 +30,32 @@ public class SearchResult extends JDialog {
 	public ArrayList<Instrument> items = new ArrayList<Instrument>();
 	private JScrollPane jsp_itemTable;
 	private ArrayList<Instrument> searchResultList = new ArrayList<>();
+	private ArrayList<AutomotiveParts_Part> partsSearchResult = new ArrayList<>();
 
-	public SearchResult(Frame parent, String searchWord) {
+	public SearchResult(Frame parent, String searchWord, int id) {
 		super(parent, true);
-		for (int i = 0; i < Main.mainWindow.items.size(); i++) {
-			if (Main.mainWindow.items.get(i).getName().toLowerCase().contains(searchWord)
-					|| Main.mainWindow.items.get(i).getMaker().toLowerCase().contains(searchWord)
-					|| Main.mainWindow.items.get(i).getDescription().toLowerCase().contains(searchWord))
-				searchResultList.add(Main.mainWindow.items.get(i));
+
+		if (id == 1) {
+			for (int i = 0; i < Main.mainWindow.items.size(); i++) {
+				if (Main.mainWindow.items.get(i).getName().toLowerCase().contains(searchWord)
+						|| Main.mainWindow.items.get(i).getMaker().toLowerCase().contains(searchWord)
+						|| Main.mainWindow.items.get(i).getDescription().toLowerCase().contains(searchWord))
+					searchResultList.add(Main.mainWindow.items.get(i));
+			}
+
+		}
+		if (id == 2) {
+			for (int i = 0; i < Main.mainWindow.partList.size(); i++) {
+				if (Main.mainWindow.partList.get(i).getPartName().toLowerCase().contains(searchWord)
+						|| Main.mainWindow.partList.get(i).getCatlogID().toLowerCase().contains(searchWord)
+						|| Main.mainWindow.partList.get(i).getDescription().toLowerCase().contains(searchWord)
+						|| Main.mainWindow.partList.get(i).getMaker().toLowerCase().contains(searchWord)
+						|| Main.mainWindow.partList.get(i).getStoragePlace().toLowerCase().contains(searchWord)) {
+					partsSearchResult.add(Main.mainWindow.partList.get(i));
+
+				}
+			}
+
 		}
 
 		setTitle("Search Result");
@@ -46,11 +66,23 @@ public class SearchResult extends JDialog {
 		SpringLayout springLayout = new SpringLayout();
 		getContentPane().setLayout(springLayout);
 
-		itemModel = new TableModelInstruments(searchResultList);
-		ListSelectionModel lm = new DefaultListSelectionModel();
-		lm.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		foundItemsTable = new JTable(itemModel);
-		foundItemsTable.getTableHeader().setReorderingAllowed(true);
+		if (id == 1) {
+			itemModel = new TableModelInstruments(searchResultList);
+			ListSelectionModel lm = new DefaultListSelectionModel();
+			lm.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			foundItemsTable = new JTable(itemModel);
+			foundItemsTable.getTableHeader().setReorderingAllowed(true);
+
+		}
+		if (id == 2) {
+
+			itemModel = new TableModelAutomotiveParts(partsSearchResult);
+			ListSelectionModel lm = new DefaultListSelectionModel();
+			lm.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			foundItemsTable = new JTable(itemModel);
+			foundItemsTable.getTableHeader().setReorderingAllowed(true);
+
+		}
 
 		JPanel panel = new JPanel();
 		springLayout.putConstraint(SpringLayout.NORTH, panel, 0, SpringLayout.NORTH, getContentPane());
@@ -82,7 +114,7 @@ public class SearchResult extends JDialog {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int idOfFoundItem = (int)foundItemsTable.getValueAt(foundItemsTable.getSelectedRow(), 0);
+				int idOfFoundItem = (int) foundItemsTable.getValueAt(foundItemsTable.getSelectedRow(), 0);
 
 				int rawIndex = 0;
 
@@ -101,11 +133,11 @@ public class SearchResult extends JDialog {
 		JButton btnCancel = new JButton("Cancel");
 		panel_1.add(btnCancel);
 		btnCancel.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dispose();
-				
+
 			}
 		});
 

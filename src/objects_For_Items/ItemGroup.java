@@ -2,6 +2,8 @@ package objects_For_Items;
 
 import java.io.Serializable;
 
+import main.Main;
+
 public class ItemGroup  implements Serializable {
 	
 	private static int uniqueID = 1;
@@ -32,7 +34,14 @@ public class ItemGroup  implements Serializable {
 	public void setGroupName(String groupName) {
 		this.groupName = groupName;
 	}
-
+	
+	public static int getGroupIDByName(String name) {
+		for (ItemGroup gr : Main.mainWindow.groupsList) {
+			if (gr.getGroupName() == name)
+				return gr.getGroupID();
+		}
+		return -1;
+	}
 	
 
 }
